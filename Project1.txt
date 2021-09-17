@@ -1,0 +1,96 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Project
+{
+    class project2
+    {
+        static void displayA(int[,] a)
+        {
+            int r = a.GetLength(0);
+            int c = a.GetLength(1);
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    Console.Write(a[i, j] + "\t");
+                }
+                Console.WriteLine();
+
+            }
+        }
+        static void shift(int[,] a)
+        {
+            int temp, b;
+            int r = a.GetLength(0);
+            int c = a.GetLength(1);
+            int l = r - 1;
+            int v = 0;
+            a[l, v] = 1;
+            displayA(a);
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    Console.WriteLine("enter 2 for UP\nenter 8 for DOWN\nenter 4 for LEFT\nenter 6 for RIGHT");
+                    b = Convert.ToInt32(Console.ReadLine());
+
+                    if (l == r - 1 && b == 8)
+                        Console.WriteLine("cannot be done, try another button");
+                    else if (v == 0 && b == 4)
+                        Console.WriteLine("cannot be done, try another button");
+                    else if (l == 0 && b == 2)
+                        Console.WriteLine("cannot be done, try another button");
+                    else if (v == c - 1 && b == 6)
+                        Console.WriteLine("cannot be done, try another button");
+                    else
+                    {
+                        if (b == 2)
+                        {
+                            temp = a[l, v];
+                            a[l, v] = a[l - 1, v];
+                            a[l - 1, v] = temp;
+                            l = l - 1;
+                        }
+                        else if (b == 4)
+                        {
+                            temp = a[l, v];
+                            a[l, v] = a[l, v - 1];
+                            a[l, v - 1] = temp;
+                            v = v - 1;
+                        }
+                        else if (b == 8)
+                        {
+                            temp = a[l, v];
+                            a[l, v] = a[l + 1, v];
+                            a[l + 1, v] = temp;
+                            l = l + 1;
+                        }
+                        else if (b == 6)
+                        {
+                            temp = a[l, v];
+                            a[l, v] = a[l, v + 1];
+                            a[l, v + 1] = temp;
+                            v = v + 1;
+                        }
+                        displayA(a);
+                    }
+                }
+            }
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter value of row ");
+            int row = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter value of coloumn ");
+            int col = Convert.ToInt32(Console.ReadLine());
+            int[,] a = new int[row, col];
+            shift(a);
+            displayA(a);
+        }
+    }
+}
+
